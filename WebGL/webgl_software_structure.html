@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL学习 - WebGL软件结构</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f9f9f9;
+            --text-color: #333;
+            --code-bg: #f5f5f5;
+            --border-color: #ddd;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .intro {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .note {
+            background-color: #fff8dc;
+            border-left: 4px solid #f1c40f;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+        
+        .image-placeholder {
+            background-color: #fff;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+        }
+        
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .reference {
+            font-size: 0.8rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>WebGL软件结构</h1>
+            <p>WebGL学习系列 - 软件架构</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <p>本章节将介绍WebGL应用程序的软件结构，包括JavaScript代码和着色器程序之间的关系，以及如何组织代码以创建高效的WebGL应用程序。</p>
+        </section>
+        
+        <section>
+            <h2>WebGL应用程序的组成部分</h2>
+            <p>WebGL应用程序由以下几个主要部分组成：</p>
+            
+            <div class="image-placeholder">
+                <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="780" height="280" fill="#fff" stroke="#ccc" />
+                    
+                    <!-- 应用程序组成部分图 -->
+                    <g transform="translate(400, 150)">
+                        <!-- 中心：WebGL应用程序 -->
+                        <circle cx="0" cy="0" r="80" fill="#3498db" fill-opacity="0.7" />
+                        <text x="0" y="5" text-anchor="middle" font-size="14" fill="white" font-weight="bold">WebGL应用程序</text>
+                        
+                        <!-- JavaScript部分 -->
+                        <g transform="translate(-200, -100)">
+                            <rect x="-80" y="-40" width="160" height="80" rx="5" fill="#2ecc71" fill-opacity="0.7" />
+                            <text x="0" y="-15" text-anchor="middle" font-size="14" fill="white" font-weight="bold">JavaScript代码</text>
+                            <text x="0" y="5" text-anchor="middle" font-size="12" fill="white">• 初始化WebGL上下文</text>
+                            <text x="0" y="25" text-anchor="middle" font-size="12" fill="white">• 创建和管理缓冲区</text>
+                            
+                            <!-- 连接线 -->
+                            <path d="M80,40 L120,100" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+                        </g>
+                        
+                        <!-- 着色器程序 -->
+                        <g transform="translate(200, -100)">
+                            <rect x="-80" y="-40" width="160" height="80" rx="5" fill="#e74c3c" fill-opacity="0.7" />
+                            <text x="0" y="-15" text-anchor="middle" font-size="14" fill="white" font-weight="bold">着色器程序</text>
+                            <text x="0" y="5" text-anchor="middle" font-size="12" fill="white">• 顶点着色器</text>
+                            <text x="0" y="25" text-anchor="middle" font-size="12" fill="white">• 片段着色器</text>
+                            
+                            <!-- 连接线 -->
+                            <path d="M-80,40 L-120,100" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+                        </g>
+                        
+                        <!-- HTML5 Canvas -->
+                        <g transform="translate(-200, 100)">
+                            <rect x="-80" y="-40" width="160" height="80" rx="5" fill="#9b59b6" fill-opacity="0.7" />
+                            <text x="0" y="-15" text-anchor="middle" font-size="14" fill="white" font-weight="bold">HTML5 Canvas</text>
+                            <text x="0" y="5" text-anchor="middle" font-size="12" fill="white">• 渲染目标</text>
+                            <text x="0" y="25" text-anchor="middle" font-size="12" fill="white">• 显示图形</text>
+                            
+                            <!-- 连接线 -->
+                            <path d="M80,0 L120,-60" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+                        </g>
+                        
+                        <!-- 3D模型数据 -->
+                        <g transform="translate(200, 100)">
+                            <rect x="-80" y="-40" width="160" height="80" rx="5" fill="#f39c12" fill-opacity="0.7" />
+                            <text x="0" y="-15" text-anchor="middle" font-size="14" fill="white" font-weight="bold">3D模型数据</text>
+                            <text x="0" y="5" text-anchor="middle" font-size="12" fill="white">• 顶点坐标</text>
+                            <text x="0" y="25" text-anchor="middle" font-size="12" fill="white">• 纹理和材质</text>
+                            
+                            <!-- 连接线 -->
+                            <path d="M-80,0 L-120,-60" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+                        </g>
+                    </g>
+                    
+                    <!-- 箭头定义 -->
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#555" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+            
+            <p>这些组件协同工作，创建一个完整的WebGL应用程序。JavaScript代码负责初始化和控制整个应用程序，着色器程序在GPU上执行渲染操作，HTML5 Canvas作为渲染目标，而3D模型数据提供要渲染的内容。</p>
+        </section>
+        
+        <section>
+            <h2>WebGL程序的典型结构</h2>
+            <p>一个典型的WebGL程序通常包含以下结构：</p>
+            
+            <div class="image-placeholder">
+                <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="780" height="380" fill="#fff" stroke="#ccc" />
+                    
+                    <!-- WebGL程序结构图 -->
+                    <g transform="translate(50, 50)">
+                        <!-- 初始化部分 -->
+                        <rect x="0" y="0" width="700" height="80" rx="5" fill="#3498db" fill-opacity="0.2" stroke="#3498db" />
+                        <text x="350" y="20" text-anchor="middle" font-size="16" fill="#3498db" font-weight="bold">初始化阶段</text>
+                        
+                        <g transform="translate(20, 40)">
+                            <rect x="0" y="0" width="150" height="30" rx="3" fill="#3498db" fill-opacity="0.7" />
+                            <text x="75" y="20" text-anchor="middle" font-size="12" fill="white">获取WebGL上下文</text>
+                            
+                            <rect x="170" y="0" width="150" height="30" rx="3" fill="#3498db" fill-opacity="0.7" />
+                            <text x="245" y="20" text-anchor="middle" font-size="12" fill="white">编译着色器程序</text>
+                            
+                            <rect x="340" y="0" width="150" height="30" rx="3" fill="#3498db" fill-opacity="0.7" />
+                            <text x="415" y="20" text-anchor="middle" font-size="12" fill="white">创建缓冲区</text>
+                            
+                            <rect x="510" y="0" width="150" height="30" rx="3" fill="#3498db" fill-opacity="0.7" />
+                            <text x="585" y="20" text-anchor="middle" font-size="12" fill="white">加载纹理和资源</text>
+                        </g>
+                        
+                        <!-- 渲染循环部分 -->
+                        <rect x="0" y="100" width="700" height="120" rx="5" fill="#e74c3c" fill-opacity="0.2" stroke="#e74c3c" />
+                        <text x="350" y="120" text-anchor="middle" font-size="16" fill="#e74c3c" font-weight="bold">渲染循环</text>
+                        
+                        <g transform="translate(20, 140)">
+                            <rect x="0" y="0" width="150" height="30" rx="3" fill="#e74c3c" fill-opacity="0.7" />
+                            <text x="75" y="20" text-anchor="middle" font-size="12" fill="white">清除缓冲区</text>
+                            
+                            <rect x="170" y="0" width="150" height="30" rx="3" fill="#e74c3c" fill-opacity="0.7" />
+                            <text x="245" y="20" text-anchor="middle" font-size="12" fill="white">设置视图和投影</text>
+                            
+                            <rect x="340" y="0" width="150" height="30" rx="3" fill="#e74c3c" fill-opacity="0.7" />
+                            <text x="415" y="20" text-anchor="middle" font-size="12" fill="white">绑定缓冲区</text>
+                            
+                            <rect x="510" y="0" width="150" height="30" rx="3" fill="#e74c3c" fill-opacity="0.7" />
+                            <text x="585" y="20" text-anchor="middle" font-size="12" fill="white">绘制命令</text>
+                            
+                            <!-- 循环箭头 -->
+                            <path d="M660,15 C700,15 700,60 660,60 L0,60 C-40,60 -40,15 0,15" stroke="#e74c3c" stroke-width="2" fill="none" marker-end="url(#arrow-red)" />
+                        </g>
+                        
+                        <!-- 交互处理部分 -->
+                        <rect x="0" y="240" width="700" height="80" rx="5" fill="#2ecc71" fill-opacity="0.2" stroke="#2ecc71" />
+                        <text x="350" y="260" text-anchor="middle" font-size="16" fill="#2ecc71" font-weight="bold">交互处理</text>
+                        
+                        <g transform="translate(20, 280)">
+                            <rect x="0" y="0" width="150" height="30" rx="3" fill="#2ecc71" fill-opacity="0.7" />
+                            <text x="75" y="20" text-anchor="middle" font-size="12" fill="white">鼠标事件处理</text>
+                            
+                            <rect x="170" y="0" width="150" height="30" rx="3" fill="#2ecc71" fill-opacity="0.7" />
+                            <text x="245" y="20" text-anchor="middle" font-size="12" fill="white">键盘事件处理</text>
+                            
+                            <rect x="340" y="0" width="150" height="30" rx="3" fill="#2ecc71" fill-opacity="0.7" />
+                            <text x="415" y="20" text-anchor="middle" font-size="12" fill="white">触摸事件处理</text>
+                            
+                            <rect x="510" y="0" width="150" height="30" rx="3" fill="#2ecc71" fill-opacity="0.7" />
+                            <text x="585" y="20" text-anchor="middle" font-size="12" fill="white">窗口大小变化处理</text>
+                        </g>
+                    </g>
+                    
+                    <!-- 箭头定义 -->
+                    <defs>
+                        <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c" />
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+            
+            <p>WebGL程序通常分为三个主要部分：初始化阶段、渲染循环和交互处理。初始化阶段只执行一次，设置所有必要的资源和状态。渲染循环是程序的核心，负责不断更新和绘制场景。交互处理部分响应用户输入，更新场景状态。</p>
+        </section>
+        
+        <section>
+            <h2>着色器程序的结构</h2>
+            <p>WebGL使用两种类型的着色器：顶点着色器和片段着色器。它们在渲染管线中扮演不同的角色：</p>
+            
+            <div class="image-placeholder">
+                <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="780" height="280" fill="#fff" stroke="#ccc" />
+                    
+                    <!-- 着色器程序结构图 -->
+                    <g transform="translate(400, 50)">
+                        <!-- 顶点着色器 -->
+                        <rect x="-350" y="0" width="300" height="200" rx="5" fill="#3498db" fill-opacity="0.2" stroke="#3498db" />
+                        <text x="-200" y="30" text-anchor="middle" font-size="16" fill="#3498db" font-weight="bold">顶点着色器</text>
+                        
+                        <g transform="translate(-200, 70)">
+                            <!-- 输入 -->
+                            <rect x="-80" y="-20" width="160" height="40" rx="3" fill="#3498db" fill-opacity="0.7" />
+                            <text x="0" y="5" text-anchor="middle" font-size="12" fill="white">输入：顶点属性</text>
+                            
+                            <!-- 处理 -->
+                            <rect x="-80" y="30" width="160" height="40" rx="3" fill="#3498db" fill-opacity="0.5" />
+                            <text x="0" y="55" text-anchor="middle" font-size="12" fill="white">处理：变换顶点位置</text>
+                            
+                            <!-- 输出 -->
+                            <rect x="-80" y="80" width="160" height="40" rx="3" fill="#3498db" fill-opacity="0.3" />
+                            <text x="0" y="105" text-anchor="middle" font-size="12" fill="white">输出：gl_Position</text>
+                        </g>
+                        
+                        <!-- 片段着色器 -->
+                        <rect x="50" y="0" width="300" height="200" rx="5" fill="#e74c3c" fill-opacity="0.2" stroke="#e74c3c" />
+                        <text x="200" y="30" text-anchor="middle" font-size="16" fill="#e74c3c" font-weight="bold">片段着色器</text>
+                        
+                        <g transform="translate(200, 70)">
+                            <!-- 输入 -->
+                            <rect x="-80" y="-20" width="160" height="40" rx="3" fill="#e74c3c" fill-opacity="0.7" />
+                            <text x="0" y="5" text-anchor="middle" font-size="12" fill="white">输入：插值的变量</text>
+                            
+                            <!-- 处理 -->
+                            <rect x="-80" y="30" width="160" height="40" rx="3" fill="#e74c3c" fill-opacity="0.5" />
+                            <text x="0" y="55" text-anchor="middle" font-size="12" fill="white">处理：计算像素颜色</text>
+                            
+                            <!-- 输出 -->
+                            <rect x="-80" y="80" width="160" height="40" rx="3" fill="#e74c3c" fill-opacity="0.3" />
+                            <text x="0" y="105" text-anchor="middle" font-size="12" fill="white">输出：gl_FragColor</text>
+                        </g>
+                        
+                        <!-- 连接箭头 -->
+                        <path d="M-120,100 L50,100" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+                    </g>
+                </svg>
+            </div>
+            
+            <p>顶点着色器处理每个顶点的位置和属性，而片段着色器处理每个像素的颜色。它们一起工作，将3D模型转换为2D图像。顶点着色器的输出会被插值并传递给片段着色器作为输入。</p>
+        </section>
+        
+        <section>
+            <h2>WebGL上下文和状态机</h2>
+            <p>WebGL是一个状态机，这意味着它维护一组内部状态，这些状态会影响渲染操作的行为。理解这一点对于编写高效的WebGL代码至关重要。</p>
+            
+            <div class="image-placeholder">
+                <svg width="100%" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="780" height="280" fill="#fff" stroke="#ccc" />
+                    
+                    <!-- WebGL状态机图 -->
+                    <g transform="translate(400, 150)">
+                        <!-- 中心：WebGL上下文 -->
+                        <circle cx="0" cy="0" r="100" fill="#3498db" fill-opacity="0.2" stroke="#3498db" stroke-width="2" />
+                        <text x="0" y="0" text-anchor="middle" font-size="16" fill="#3498db" font-weight="bold">WebGL上下文</text>
+                        
+                        <!-- 状态1：当前程序 -->
+                        <g transform="translate(-70, -50)">
+                            <circle cx="0" cy="0" r="40" fill="#e74c3c" fill-opacity="0.7" />
+                            <text x="0" y="0" text-anchor="middle" font-size="12" fill="white">当前程序</text>
+                        </g>
+                        
+                        <!-- 状态2：当前缓冲区 -->
+                        <g transform="translate(70, -50)">
+                            <circle cx="0" cy="0" r="40" fill="#2ecc71" fill-opacity="0.7" />
+                            <text x="0" y="0" text-anchor="middle" font-size="12" fill="white">当前缓冲区</text>
+                        </g>
+                        
+                        <!-- 状态3：当前纹理 -->
+                        <g transform="translate(-70, 50)">
+                            <circle cx="0" cy="0" r="40" fill="#f39c12" fill-opacity="0.7" />
+                            <text x="0" y="0" text-anchor="middle" font-size="12" fill="white">当前纹理</text>
+                        </g>
+                        
+                        <!-- 状态4：渲染状态 -->
+                        <g transform="translate(70, 50)">
+                            <circle cx="0" cy="0" r="40" fill="#9b59b6" fill-opacity="0.7" />
+                            <text x="0" y="0" text-anchor="middle" font-size="12" fill="white">渲染状态</text>
+                        </g>
+                        
+                        <!-- 外部命令 -->
+                        <g transform="translate(-200, 0)">
+                            <rect x="-80" y="-60" width="160" height="120" rx="5" fill="#34495e" fill-opacity="0.7" />
+                            <text x="0" y="-30" text-anchor="middle" font-size="14" fill="white" font-weight="bold">JavaScript命令</text>
+                            <text x="0" y="0" text-anchor="middle" font-size="12" fill="white">gl.useProgram()</text>
+                            <text x="0" y="20" text-anchor="middle" font-size="12" fill="white">gl.bindBuffer()</text>
+                            <text x="0" y="40" text-anchor="middle" font-size="12" fill="white">gl.enable()</text>
+                            
+                            <!-- 命令箭头 -->
+                            <path d="M80,0 L150,0" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+                        </g>
+                        
+                        <!-- 渲染结果 -->
+                        <g transform="translate(200, 0)">
+                            <rect x="-80" y="-60" width="160" height="120" rx="5" fill="#1abc9c" fill-opacity="0.7" />
+                            <text x="0" y="-30" text-anchor="middle" font-size="14" fill="white" font-weight="bold">渲染结果</text>
+                            <text x="0" y="0" text-anchor="middle" font-size="12" fill="white">gl.drawArrays()</text>
+                            <text x="0" y="20" text-anchor="middle" font-size="12" fill="white">gl.drawElements()</text>
+                            
+                            <!-- 结果箭头 -->
+                            <path d="M-150,0 L-80,0" stroke="#555" stroke-width="2" marker-end="url(#arrow)" />
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            
+            <p>WebGL上下文维护着多种状态，如当前使用的着色器程序、绑定的缓冲区、启用的功能等。JavaScript命令会修改这些状态，而渲染命令则根据当前状态执行操作。理解这种状态机模型对于优化WebGL应用程序至关重要，因为状态切换可能是性能瓶颈。</p>
+        </section>
+        
+        <section>
+            <h2>WebGL应用程序的最佳实践</h2>
+            <p>以下是一些WebGL应用程序开发的最佳实践：</p>
+            
+            <ol>
+                <li><strong>最小化状态变化</strong>：尽量减少WebGL状态的切换，如着色器程序、缓冲区和纹理的绑定。</li>
+                <li><strong>批处理绘制调用</strong>：将多个小的绘制调用合并为较少的大批量调用。</li>
+                <li><strong>使用适当的数据类型</strong>：选择合适的数据类型和格式，以优化内存使用和性能。</li>
+                <li><strong>实现错误检查</strong>：在开发过程中添加错误检查，以便及早发现和修复问题。</li>
+                <li><strong>优化着色器代码</strong>：编写高效的着色器代码，避免不必要的计算和分支。</li>
+            </ol>
+            
+            <div class="note">
+                <p><strong>注意：</strong>WebGL是一个低级API，提供了很大的灵活性，但也需要开发者对图形编程有深入的理解。对于初学者，可以考虑使用Three.js等高级库，它们提供了更简单的API和更多的功能。</p>
+            </div>
+        </section>
+        
+        <section class="reference">
+            <h3>参考资料</h3>
+            <ol>
+                <li>本教程改编自 <a href="https://learnwebgl.brown37.net/the_big_picture/software_structure.html" target="_blank">LearnWebGL - WebGL Software Structure</a></li>
+                <li>更多WebGL学习资源可访问 <a href="https://learnwebgl.brown37.net/" target="_blank">LearnWebGL</a></li>
+            </ol>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>WebGL学习系列 &copy; 2023</p>
+        </div>
+    </footer>
+</body>
+</html>
